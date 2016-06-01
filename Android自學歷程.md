@@ -20,7 +20,7 @@ grammar_cjkRuby: true
 ### ListView的基本使用与优化
 
 
-### 屏幕适配基础
+### Android屏幕适配基础
 
 ### Fragment完全解析
 
@@ -30,7 +30,7 @@ grammar_cjkRuby: true
 
 ### Android应用程序的生命周期
 
-### 深入了解View
+### View深入了解
 
 ### Service 深入解析
 
