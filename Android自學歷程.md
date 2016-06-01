@@ -1,5 +1,5 @@
 ---
-title: 2016-6-1 Android自學歷程
+title:Android自学历程
 tags: 新建,模板,小书匠
 grammar_cjkRuby: true
 ---
@@ -11,6 +11,36 @@ grammar_cjkRuby: true
 # Android 初级知识
 
 ### Activity的生命周期
+
+ * 首先是经典的Activity生命周期图
+ ![Activity life][1]
+
+ * Activity其实是一个继承了ApplicationContext类的类，其中有与生命周期有关的七个方法:
+  `protected void onCreate(Bundle savedInstanceState);`
+  `protected void onStart();`
+  `protected void onResume();`
+  `protected void onPause();`
+  `protected void onRestart();`
+  `protected void onStop();`
+  `protected void onDestroy();`
+
+  * Start 启动时，将正常运行
+      * onCreate()
+      * onStart()
+      * onResume()
+  * BACK 运行中的程序，正常Back退出
+      * onPause()
+      * onStop()
+      * onDestroy()
+  * HOME 运行中的程序，HOME键临时切换出程序
+      * onPause
+      * onStop()
+  * HOME后再次启动
+      * onRestart()
+      * onStart()
+      * onResume()
+
+  `需要注意的是，当HOME键切换出应用的时候，应该在onPause方法中将数据保存在变量中，在onRestart方法中重新加载保存的数据`
 
 ### Android 的四大組件与生命周期
 
@@ -104,3 +134,6 @@ grammar_cjkRuby: true
 ### 推送 
 
 ### 地图
+
+
+  [1]: ./images/1464799544450.jpg "1464799544450.jpg"
