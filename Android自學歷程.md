@@ -5,7 +5,7 @@ grammar_cjkRuby: true
 ---
 
 
-本文是本人==Rookie(yqmac163@163.com)==自学期间，根据网上资料整理的进度表，依次进行学习、丰富使用。
+本文是本人 ==Rookie(yqmac163@163.com)== 自学期间，根据网上资料整理的进度表，依次进行学习、丰富使用。
 
 
 # Android 初级知识
