@@ -10,16 +10,15 @@ grammar_cjkRuby: true
 
 # Android 初级知识
 
-### Android 的四大組件
+
+### Android 的四大組件与生命周期
 
 * ### Activity
-
-
-### Acitvity的标准Intent
 
     
 ### ListView的基本使用与优化
 
+### Acitvity的标准Intent
 
 ### Android屏幕适配基础
 
