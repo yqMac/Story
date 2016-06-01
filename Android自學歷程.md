@@ -87,3 +87,19 @@ grammar_cjkRuby: true
 ### Android-Universal-Image-Loader
 
 ### 开源项目分类汇总
+
+# 老蒋简历中涉及的知识点
+
+###　MVC和MVP设计模式
+
+### 绘图和动画
+
+### 互动效果
+
+### 消息队列机制
+
+### Glide 
+
+### 推送 
+
+### 地图
