@@ -10,6 +10,7 @@ grammar_cjkRuby: true
 
 # Android 初级知识
 
+### Activity的生命周期
 
 ### Android 的四大組件与生命周期
 
