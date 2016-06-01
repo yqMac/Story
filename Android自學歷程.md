@@ -44,6 +44,8 @@ grammar_cjkRuby: true
 
 ### Android 的四大組件与生命周期
 
+`基础的，四大组件为:Activity , Service服务 ，`
+
 * ### Activity
 
     
