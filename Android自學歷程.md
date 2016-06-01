@@ -44,5 +44,38 @@ grammar_cjkRuby: true
 
 ## AsyncTask 完全解析
 
-## Android Custom Loading Deamo
+## Android Custom Loading Deamo 做App的Loading动画
 
+# Andorid 进阶
+
+## Gradle
+
+## 性能优化
+
+## 9GAG--一个完整的开源项目
+
+## Android 开发资源
+
+# Andorid 设计
+
+## Material Design
+
+# Android 兼容库
+
+## ActionBarSherlock
+
+## ActionBar Compat
+
+## NineOldAndroids
+
+## Support V4
+
+## NavigationDrawer 导航抽屉
+
+## SlidingPanelLayout
+
+## SwipeRefreshLayout
+
+# Andorid 的一些开源库
+
+#
