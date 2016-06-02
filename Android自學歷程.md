@@ -44,10 +44,31 @@ grammar_cjkRuby: true
 
 ### Android 的四大組件与生命周期
 
-`基础的，四大组件为:Activity , Service服务 ，`
+* ### 四大组件是什么
 
-* ### Activity
+    基础的，四大组件为: ==Activity , Service服务 Content Provider 内容提供者，BroadcastReceiver广播接收器== `
 
+* ### Activity 
+
+    * Activity 
+        Activity ：在应用程序中，一个Activity就是一个单独的屏幕，他可以显示一些控件，也可以监听并处理用户的事件做出响应。
+    
+    * Intent 
+        表示一个有效的做某事的请求
+    
+        Activity之间通过Intent进行通信。在Intent的描述结构中，有两个最重要的部分：==动作==和==动作对应的数据==。典型的动作类型：MAIN,VIEW,PICK,EDIT等。而动作的数据以URI的形式进行表示。
+    * IntentFilter 
+        描述一个Activity或者IntentReceivier能够操作哪些intent
+        
+        为一个Activity在AndroidManifest.xml中定义IntentFilter，能够定义该Activity能够处理哪些动作的Intent。当使用startActivity(Intent myIntent)进行Activity的跳转时，系统会在所有安装的应用程序定义的IntentFilter中查找，找到最匹配myIntent的Intent对应的Activity，新的Activity在接收到myIntent的通知后，开始运行。
+        
+        startActivity方法被调用，将会触发解析myIntent的方法，这个机制提供了两个关键的好处。
+        * Activities 能够重复处理不同来源的Intent消息。「如果一个Intent对应多个相同的IntentFilter，系统回弹窗让你进行选择」。
+           
+        * Activities 可以在任何时候被一个具有相同点的IntentFilter的新的Activity取代
+        
+    
+    
     
 ### ListView的基本使用与优化
 
@@ -111,6 +132,9 @@ grammar_cjkRuby: true
 
 # Andorid 的一些开源库
 
+### 镇楼图
+![enter description here][2]
+
 ### Volley
 
 ### ActiveAndroid
@@ -139,3 +163,4 @@ grammar_cjkRuby: true
 
 
   [1]: ./images/1464799544450.jpg "1464799544450.jpg"
+  [2]: ./images/1464830541784.jpg "1464830541784.jpg"
