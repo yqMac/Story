@@ -44,11 +44,11 @@ grammar_cjkRuby: true
 
 ### Android 的四大組件与生命周期
 
-* ### 四大组件是什么
+* #### 四大组件是什么
 
     基础的，四大组件为: ==Activity , Service服务 Content Provider 内容提供者，BroadcastReceiver广播接收器== `
 
-* ### Activity 
+* #### Activity 
 
     * Activity 
         Activity ：在应用程序中，一个Activity就是一个单独的屏幕，他可以显示一些控件，也可以监听并处理用户的事件做出响应。
@@ -62,14 +62,39 @@ grammar_cjkRuby: true
         
         为一个Activity在AndroidManifest.xml中定义IntentFilter，能够定义该Activity能够处理哪些动作的Intent。当使用startActivity(Intent myIntent)进行Activity的跳转时，系统会在所有安装的应用程序定义的IntentFilter中查找，找到最匹配myIntent的Intent对应的Activity，新的Activity在接收到myIntent的通知后，开始运行。
         
-        startActivity方法被调用，将会触发解析myIntent的方法，这个机制提供了两个关键的好处。
+        startActivity方法被调用时，将会触发解析myIntent的方法，这个机制提供了两个关键的好处。
         * Activities 能够重复处理不同来源的Intent消息。「如果一个Intent对应多个相同的IntentFilter，系统回弹窗让你进行选择」。
            
         * Activities 可以在任何时候被一个具有相同点的IntentFilter的新的Activity取代
         
+        AndroidManifest文件中含有如下的过滤器的Activity组件为默认启动类，当程序启动时系统自动调用它。
     
     
+        <intent-filter>
+          <action android:name="android.intent.action.MAIN" />  
+          <category android:name="android.intent.category.LAUNCHER" />  
+        </intent-filter> 
     
+    
+**注意，在AndroidManifest中存在空的<intent-filter>[里面的东西被注释时]，app无法启动，需要将<intent-filter>一起注释掉**
+
+* #### Service 服务
+
+    一个Servcie就是一段长生命周期、没有用户界面、可以用来开发如监控类的程序 
+    
+    * 创建服务类
+        
+        每个服务都是一个继承了android.app.service类，并重写了其中部分方法的类。
+    * 启动服务方式
+        
+        服务两种启动方式: `startIntent(Intent myService);` 和 `bindService(,,);`
+        
+      startService启动的服务：
+`在同一个应用任何地方调用 startService() 方法就能启动 Service 了，然后系统会回调 Service 类的 onCreate() 以及 onStart() 方法。这样启动的 Service 会一直运行在后台，直到 Context.stopService() 或者 selfStop() 方法被调用。另外如果一个 Service 已经被启动，其他代码再试图调用 startService() 方法，是不会执行 onCreate() 的，但会重新执行一次 onStart() 。`
+
+==context.startService(Intent myService)-->onCreate()-->onStart()-->context.stopService(intent)-->onDestroy()==
+        
+
 ### ListView的基本使用与优化
 
 ### Acitvity的标准Intent
