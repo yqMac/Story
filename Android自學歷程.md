@@ -90,6 +90,7 @@ grammar_cjkRuby: true
         服务两种启动方式: `Context.startIntent(Intent myService);` 和 `Context.bindService(,,);`
         
       startService启动的服务：
+      
     ==context.startService(Intent myService)-->onCreate()-->onStart()-->service running -->context.stopService(intent)-->onDestroy()-->Service stop==
     
     注意:在执行startService的时候，如果Service已经运行，则不会再执行Create，而直接执行Start，所以onStart在一个Service的生命周期中可能会执行多次。    
