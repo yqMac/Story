@@ -90,11 +90,11 @@ grammar_cjkRuby: true
         服务两种启动方式: `Context.startIntent(Intent myService);` 和 `Context.bindService(,,);`
         
       startService启动的服务：
-`在同一个应用任何地方调用 startService() 方法就能启动 Service 了，然后系统会回调 Service 类的 onCreate() 以及 onStart() 方法。这样启动的 Service 会一直运行在后台，直到 Context.stopService() 或者 selfStop() 方法被调用。另外如果一个 Service 已经被启动，其他代码再试图调用 startService() 方法，是不会执行 onCreate() 的，但会重新执行一次 onStart() 。`
+    ==context.startService(Intent myService)-->onCreate()-->onStart()-->service running -->context.stopService(intent)-->onDestroy()-->Service stop==
+    
+    注意:在执行startService的时候，如果Service已经运行，则不会再执行Create，而直接执行Start，所以onStart在一个Service的生命周期中可能会执行多次。    
 
-==context.startService(Intent myService)-->onCreate()-->onStart()-->service running -->context.stopService(intent)-->onDestroy()-->Service stop==
-        
-
+    注意：
 ### ListView的基本使用与优化
 
 ### Acitvity的标准Intent
