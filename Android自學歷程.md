@@ -94,7 +94,9 @@ grammar_cjkRuby: true
     
     注意:在执行startService的时候，如果Service已经运行，则不会再执行Create，而直接执行Start，所以onStart在一个Service的生命周期中可能会执行多次。    
 
-    注意：Service的onStart已经被startCommand替换掉了，周期不变
+    注意:Service的onStart已经被startCommand替换掉了，周期不变
+    
+    
 ### ListView的基本使用与优化
 
 ### Acitvity的标准Intent
