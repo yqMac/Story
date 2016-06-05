@@ -95,7 +95,7 @@ grammar_cjkRuby: true
     
          注意:如果Service已经运行，则不会再执行Create，而直接执onStartCommand()，所以onStart在一个Service的生命周期中可能会执行多次。    
 
-         注意:Service的onStart已经被startCommand替换掉了，周期不变
+         注意:你永远都不可能直接调用startCommand（），都是通过Intent中介
     
          startService时需要参数为intent，所以可以使用intent进行Activity与Service之间传值
     
@@ -104,9 +104,45 @@ grammar_cjkRuby: true
         ==context.bindService(p1,p2,p3)-->onCreate()-->onBind(Intent)-->Service running -->onUbind()-->onDestroy()-->service stop==
         
         注意:onBind只能执行一次，不可多次绑定。即整个Service的生命周期中，除了onStartCommand()可以通过多次调用startService多次调用，其余的onCreate,onBind,onUnbind,onDestroy等在一个生命周期中只能被调用一次。
+    * 传值通信 
+        startCommand方式
+        
+        如果service没有提供绑定功能，传给startService()的intent是应用组件与service之间唯一的通讯方式．然而，如果你希望service回发一个结果，那么启动这个service的客户端可以创建一个用于广播(使用getBroadcast())的PendingIntent然后放在intent中传给service，service然后就可以使用广播来回送结果
+        
+        bindService方式
+        
+        可以通过bindService(p1,p2,p3);的intent传值给service；
+        或者，在Bindservice时候会有一个IBinder返回。可以利用它与Service进行通信：如下
+        
+            1、创建一个Service、S1
+            
+            2、Service内创建一个用于通信的接口、I1，要继承IBinder接口。
+            
+            3、Service内创建一个用于通信的类C1，类继承Binder实现接口I1
+            
+            4、在Service S1的onBind方法中，返回一个C1的实例用于通信
+            
+            5、在Activity中BindService的connection的回调中，将Ibinder参数强转为接口I1并保存，然后就可以使用该对象与Service S1通信了。
+            
+            6、在Activity中任意位置都可以使用5中获取到的Ibinder对象进行实时通信了。
+            
+        
+    
     * 停止服务
     
-    通过startService(intent)启动的服务可以通过在Activity中调用stopService(Intent)来主动停掉服务
+        *  使用startService启动的服务需要使用StopService(intent)或者stopself
+    
+        一个＂启动的＂service必须管理其自己的生命期．这表示，系统不会停止或销毁这种service，除非内存不够用了并且service在onStartCommand()返回后会继续运行．所以，service必须调用stopSelf()停止自己或由另一个组件调用stopService()来停止它．
+        
+        一旦通过stopSelf()或stopService()发出了停止请求，系统就会尽可能快地销毁service．
+    
+        然而，如果你的service同时处理多个对onStartCommand()的请求，那么你不应在处理完一个请求之后就停止service，因为你可能已经又收到了新的启动请求(在第个完成后停止将会结束掉第二个)．要避免这个问题，你可以使用stopSelf(int)来保证你的停止请求对应于你最近的开始请求．也就是，当你调用stopSelf(int)时，你传递开始请求的ID(传递给onStartCommand()的startId)给service，如果service在你调用stopSelf(int)之前收到一了个新的开始请求，发现ID不同，于是service将不会停止．
+    
+        即在service执行结束后，使用stopself(startId)来结束自己当前服务id对应的服务。防止终止其余正在使用当前服务的操作。
+    
+        注意：你的应用在完成工作后停止它所有的service是非常重要的．这可以避免浪费系统资源和消耗电量．如果需要，其它的组件可以调用stopService()停止service．即使你为service启用了绑定，你也必须自己停止service，甚至它收到了对onStartCommand()的调用也这样．
+
+        * 使用 BindService启动的服务，在Activity停止或者调用UnbindService的时候会自动停止
     
     
 ### ListView的基本使用与优化
