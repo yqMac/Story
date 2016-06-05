@@ -89,13 +89,24 @@ grammar_cjkRuby: true
         
         服务两种启动方式: `Context.startIntent(Intent myService);` 和 `Context.bindService(,,);`
         
-      startService启动的服务：
+        startService启动的服务：  
       
-    ==context.startService(Intent myService)-->onCreate()-->onStart()-->service running -->context.stopService(intent)-->onDestroy()-->Service stop==
+         ==context.startService(Intent myService)-->onCreate()-->onStartCommand(,,)-->service running -->context.stopService(intent)-->onDestroy()-->Service stop==
     
-    注意:在执行startService的时候，如果Service已经运行，则不会再执行Create，而直接执行Start，所以onStart在一个Service的生命周期中可能会执行多次。    
+         注意:如果Service已经运行，则不会再执行Create，而直接执onStartCommand()，所以onStart在一个Service的生命周期中可能会执行多次。    
 
-    注意:Service的onStart已经被startCommand替换掉了，周期不变
+         注意:Service的onStart已经被startCommand替换掉了，周期不变
+    
+         startService时需要参数为intent，所以可以使用intent进行Activity与Service之间传值
+    
+        bindService启动的服务：   
+        
+        ==context.bindService(p1,p2,p3)-->onCreate()-->onBind(Intent)-->Service running -->onUbind()-->onDestroy()-->service stop==
+        
+        注意:onBind只能执行一次，不可多次绑定。即整个Service的生命周期中，除了onStart可以通过多次调用startService多次调用，其余的onCreate,onBind,onUnbind,onDestroy等在一个生命周期中只能被调用一次。
+    * 停止服务
+    
+    通过startService(intent)启动的服务可以通过在Activity中调用stopService(Intent)来主动停掉服务
     
     
 ### ListView的基本使用与优化
