@@ -103,7 +103,7 @@ grammar_cjkRuby: true
         
         ==context.bindService(p1,p2,p3)-->onCreate()-->onBind(Intent)-->Service running -->onUbind()-->onDestroy()-->service stop==
         
-        注意:onBind只能执行一次，不可多次绑定。即整个Service的生命周期中，除了onStart可以通过多次调用startService多次调用，其余的onCreate,onBind,onUnbind,onDestroy等在一个生命周期中只能被调用一次。
+        注意:onBind只能执行一次，不可多次绑定。即整个Service的生命周期中，除了onStartCommand()可以通过多次调用startService多次调用，其余的onCreate,onBind,onUnbind,onDestroy等在一个生命周期中只能被调用一次。
     * 停止服务
     
     通过startService(intent)启动的服务可以通过在Activity中调用stopService(Intent)来主动停掉服务
