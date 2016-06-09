@@ -143,7 +143,20 @@ grammar_cjkRuby: true
         注意：你的应用在完成工作后停止它所有的service是非常重要的．这可以避免浪费系统资源和消耗电量．如果需要，其它的组件可以调用stopService()停止service．即使你为service启用了绑定，你也必须自己停止service，甚至它收到了对onStartCommand()的调用也这样．
 
         * 使用 BindService启动的服务，在Activity停止或者调用UnbindService的时候会自动停止
+        
+    * 服务的级别
     
+        进程的优先级：
+        * Empty process--仅用于缓存，提高打开速度，没有任何活动的应用组件（Activity和Service）的进程
+         
+        * Background process--拥有一个对于用户不可见的Activity的进程(onStop)   
+        
+        * Service process --拥有startService启动的服务的进程
+        
+        * Visible process --有一个不在前台但是用户可见的Activity(onPause)或者绑定了一个可见的Activity的Service的进程
+        
+        * Foreground process -- onResume的Activity，Service绑定正在操作的Activity，，有运行在前台的服务，有一个服正在执行生命周期，有一个正在执行onReceive的BroadcastReceiver
+        
     
 ### ListView的基本使用与优化
 
