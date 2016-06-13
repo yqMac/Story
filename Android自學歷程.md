@@ -428,8 +428,112 @@ grammar_cjkRuby: true
     intent.putExtra(SearchManager.QUERY, "ANDROID");  
     startActivity(intent);  
     
-* #### 用于BroadcastProvider的Intent
+* #### 用于BroadcastReceiver的Intent
 
+   
+
+ 1. ACTION_TIME_TICK，系统时钟广播，系统每分钟都会发送一个这样的广播
+    如果在应用开发中，有些逻辑依赖于系统时钟，可以注册一个广播接收者
+    这是一个受保护的action，只有系统才能发送这个广播
+    并且，在manifest文件中注册的广播接收者不能接收到该广播，若要接收该广播，必须在代码中注册广播接收者
+
+
+    registerReceiver(new BroadcastReceiver(){  
+        @Override  
+        public void onReceive(Context context, Intent intent) {  
+            Log.i("xxxx", "TIME_TICK");  
+        }  
+    },   
+    new IntentFilter(Intent.ACTION_TIME_TICK));  
+
+ 2. 官方文档中列出的广播ACTION
+
+| 标准Action                  | Action含义                                 |
+| --------------------------- | ------------------------------------------ |
+| ACTION_TIME_TICK            | 系统时钟广播                               |
+| ACTION_TIME_CHANGED         | 时间被重新设置                             |
+| ACTION_TIMEZONE_CHANGED     | 时区改变                                   |
+| ACTION_BOOT_COMPLIETED      | 系统启动完成                               |
+| ACTION_PACKAGE_ADDED        | 系统中安装了新的应用                       |
+| ACTION_PACKAGE_CHANGED      | 系统中已存在的app包被更改                  |
+| ACTION_PACKAGE_REMOVED      | 系统中已存在的app被移除                    |
+| ACTION_PACKAGE_RESTARTED    | 用户重启了一个app，这个app的所有进程被杀死 |
+| ACTION_PACKAGE_DATA_CLEARED | 用户清除了一个app的数据                    |
+| ACTION_UID_REMOVED          | 系统中的一个user ID 被移除                 |
+| ACTION_BATTERY_CHANGED      | 电池状态改变，这是一个sticky广播           |
+| ACTION_POWER_CONNECTED      | 设备链接了外部电源                         |
+| ACTION_POWER_DISCONNECTED   | 外部电源被移除                             |
+| ACTION_SHUTDOWN             | 设备正在关机                               |
+
+
+* #### Android中的标准类别(category)
+    类别（category）一般配合action使用，以下为系统中的标准类别。
+    
+
+| Category(类别)                |
+| ----------------------------- |
+| CATEGORY_DEFAULT              |
+| CATEGORY_BROWSABLE            |
+| CATEGORY_TAB                  |
+| CATEGORY_ALTERNATIVE          |
+| CATEGORY_SELECTED_ALTERNATIVE |
+| CATEGORY_LAUNCHER             |
+| CATEGORY_INFO                 |
+| CATEGORY_HOME                 |
+| CATEGORY_PREFERENCE           |
+| CATEGORY_TEST                 |
+| CATEGORY_CAR_DOCK             |
+| CATEGORY_DESK_DOCK            |
+| CATEGORY_LE_DESK_DOCK         |
+| CATEGORY_HE_DESK_DOCK         |
+| CATEGORY_CAR_MOVE             |
+| CATEGORY_APP_MARKET           |
+
+
+* #### Android中标准的Extra键值
+    这些常量用于在调用Intent.putExtra(String,Bundle)时作为键值传递数据，同样由于数量较多，只列出索引
+    
+
+| Extra值                       |
+| ----------------------------- |
+|EXTRA_ALARM_COUNT              |
+|EXTRA_BCC                      |
+|EXTRA_CC                       |
+|EXTRA_CHANGED_COMPONENT_NAME   |
+|EXTRA_DATA_REMOVED             |
+|EXTRA_DOCK_STATE               |
+|EXTRA_DOCK_STATE_HE_DESK       |
+|EXTRA_DOCK_STATE_LE_DESK       |
+|EXTRA_DOCK_STATE_CAR           |
+|EXTRA_DOCK_STATE_DESK          |
+|EXTRA_DOCK_STATE_UNDOCKED      |
+|EXTRA_DONT_KILL_APP            |
+|EXTRA_EMAIL                    |
+|EXTRA_INITIAL_INTENTS          |
+|EXTRA_INTENT                   |
+|EXTRA_KEY_EVENT                |
+|EXTRA_ORIGINATING_URI          |
+|EXTRA_PHONE_NUMBER             |
+|EXTRA_REFERRER                 |
+|EXTRA_REMOTE_INTENT_TOKEN      |
+|EXTRA_REPLACING                |
+|EXTRA_SHORTCUT_ICON            |
+|EXTRA_SHORTCUT_ICON_RESOURCE   |
+|EXTRA_SHORTCUT_INTENT          |
+|EXTRA_STREAM                   |
+|EXTRA_SHORTCUT_NAME            |
+|EXTRA_SUBJECT                  |
+|EXTRA_TEMPLATE                 |
+|EXTRA_TEXT                     |
+|EXTRA_TITLE                    |
+|EXTRA_UID                      |
+
+
+* #### Intent中的标志(FLAG)
+    Intent类中定义了一些以FLAG_开头的标志位，这些标志位中有的非常重要，会影响app中Activity和BroadcastReceiver等的行为。
+    以下为这些标志位的索引，是从官方文档上的截图。之后会对重要的标志加以详细分析
+
+![Intent中的标志的官方文档截图][4]
 ### Android屏幕适配基础
 
 ### Fragment完全解析
@@ -489,7 +593,7 @@ grammar_cjkRuby: true
 # Andorid 的一些开源库
 
 ### 镇楼图
-![enter description here][4]
+![enter description here][5]
 
 ### Volley
 
@@ -521,5 +625,5 @@ grammar_cjkRuby: true
   [1]: ./images/1464799544450.jpg "1464799544450.jpg"
   [2]: http://www.cnblogs.com/bravestarrhu/archive/2012/05/02/2479461.html
   [3]: http://www.cnblogs.com/noTice520/archive/2011/12/05/2276379.html
-  [4]: ./images/1464830541784.jpg "1464830541784.jpg"
-
+  [4]: ./images/1465809373152.jpg "1465809373152.jpg"
+  [5]: ./images/1464830541784.jpg "1464830541784.jpg"
