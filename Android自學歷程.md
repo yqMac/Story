@@ -291,15 +291,15 @@ grammar_cjkRuby: true
             }
      });
 
-* #### ListView实现加载时候显示动画
+* #### ListView实现加载时候显示动画  
 
 ==TODO==
 
-* #### ListView 实现拖拽
+* #### ListView 实现拖拽  
 
 ==TODO==
 
-* #### ListView下拉刷新
+* #### ListView下拉刷新  
 
 ==TODO==
 
@@ -467,7 +467,7 @@ grammar_cjkRuby: true
 | ACTION_SHUTDOWN             | 设备正在关机                               |
 
 
-* #### Android中的标准类别(category)
+* #### Android中的标准类别(category)  
     类别（category）一般配合action使用，以下为系统中的标准类别。
     
 
@@ -543,8 +543,13 @@ grammar_cjkRuby: true
 [参考博客][7]
 
 * #### Fragment基本知识
+
 * #### 动态添加Fragment
-* 
+
+* #### Fragment的生命周期
+
+* #### Fragment之间通信
+
 
 ### Sqlite应用详解  
 [推荐博客][8]
