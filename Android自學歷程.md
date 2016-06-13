@@ -49,7 +49,7 @@ grammar_cjkRuby: true
     基础的，四大组件为: ==Activity , Service服务 Content Provider 内容提供者，BroadcastReceiver广播接收器== `
 
 * #### Activity 
-
+    [详细解释][2]
     * Activity 
         Activity ：在应用程序中，一个Activity就是一个单独的屏幕，他可以显示一些控件，也可以监听并处理用户的事件做出响应。
     
@@ -157,8 +157,139 @@ grammar_cjkRuby: true
         
         * Foreground process -- onResume的Activity，Service绑定正在操作的Activity，，有运行在前台的服务，有一个服正在执行生命周期，有一个正在执行onReceive的BroadcastReceiver
         
+* #### BoardcastReceiver 广播接收器
+
+    `你的应用可以使用它对外部事件进行过滤只对感兴趣的外部事件(如当电话呼入时，或者数据网络可用时)进行接收并做出响应。广播接收器没有用户界面。然而，它们可以启动一个activity或serice 来响应它们收到的信息，或者用NotificationManager 来通知用户。通知可以用很多种方式来吸引用户的注意力──闪动背灯、震动、播放声音等。一般来说是在状态栏上放一个持久的图标，用户可以打开它并获取消息。`
+    
+    * 广播类型
+        * 普通广播，通过Context.sendBroadcast(Intent myIntent)发送的广播
+        * 有序广播，通过Context.sendOrderedBroadcast(intent,receiverPermission)发送的，该方法第二个参数决定该广播的级别，同级别接受的先后是随机的，再到级别低的接受广播，高级别的或者同级别的先接收到的广播可以通过abortBroadcast()方法截断广播使其他的接受者无法收到该广播
+        * 异步广播，通过Context.sendStickBroadcast(intent myIntent)方法发送的，还有sendStickyOrderedBroadcast(Intent,resultReceiver,scheduler,initialCode,initialData,initialExtras)方法，该方法具有有序广播的特性，也有异步广播的特性；发送异步广播要:`<uses-permission android:name="android.permission.BROADCAST_STICKY"/>`权限，接收并处理完Intent后，广播依然存在，知道你调用removeStickyBroadcast(intent)主动把它去掉
+        * 注意，发送广播时的intent的参数与Context.startActivity()启动起来的intent不同，前者可以被多个订阅它的广播接收器调用，后者只能被一个(Activity或者Service)调用
+        
+    * 监听广播Intent步骤
+    
+        * 首先：写一个继承BroadCastReceiver的类,重写onReceive()方法,广播接收器仅在它执行这个方法时处于活跃状态。当onReceive()返回后，它即为失活状态,注意:为了保证用户交互过程的流畅,一些费时的操作要放到线程里,如类名SMSBroadcastReceiver
+        * 然后：注册该广播接收者,注册有两种方法程序动态注册和AndroidManifest文件中进行静态注册（可理解为系统中注册）如下：
+            *  静态注册,注册的广播，下面的priority表示接收广播的级别"2147483647"为最高优先级
+            `<receiver android:name=".SMSBroadcastReceiver" >`
+　             ` <intent-filter android:priority = "2147483647" >`
+　　　              `<action android:name="android.provider.Telephony.SMS_RECEIVED" />`
+　　            `</intent-filter>`
+           ` </receiver >`
+
+            * 动态注册，一般在Activity可交互时onResume()内注册BroadcastReceiver
+            
+
+        IntentFilter intentFilter=new IntentFilter("android.provider.Telephony.SMS_RECEIVED");
+        registerReceiver(mBatteryInfoReceiver ,intentFilter);
+        //反注册
+        unregisterReceiver(receiver);
+        
+* 注意：
+        
+        1.广播生命周期只有十秒左右，如果在 onReceive() 内做超过十秒内的事情，就会报ANR(Application No Response) 程序无响应的错误信息，如果需要完成一项比较耗时的工作 , 应该通过发送 Intent 给 Service, 由Service 来完成 . 这里不能使用子线程来解决 , 因为 BroadcastReceiver 的生命周期很短 , 子线程可能还没有结束BroadcastReceiver 就先结束了 .BroadcastReceiver 一旦结束 , 此时 BroadcastReceiver 的所在进程很容易在系统需要内存时被优先杀死 , 因为它属于空进程 ( 没有任何活动组件的进程 ). 如果它的宿主进程被杀死 , 那么正在工作的子线程也会被杀死 . 所以采用子线程来解决是不可靠的
+        
+        2. 动态注册广播接收器还有一个特点，就是当用来注册的Activity关掉后，广播也就失效了。静态注册无需担忧广播接收器是否被关闭,只要设备是开启状态,广播接收器也是打开着的。也就是说哪怕app本身未启动,该app订阅的广播在触发时也会对它起作用
+        
+        系统常见广播Intent,如开机启动、电池电量变化、时间改变等广播
+            
+* #### Content Provider
     
 ### ListView的基本使用与优化
+
+[参考博客][3]
+
+* #### 基本使用
+    * 职责
+    （1）将数据填充到布局。
+    （2）处理用户的选择点击等操作。
+    * 创建需要：
+    （1）ListView中的每一列的View。
+    （2）填入View的数据或者图片等。
+    （3）连接数据与ListView的适配器。
+* ####　适配器
+    配器是一个连接数据和AdapterView（ListView就是一个典型的AdapterView，后面还会学习其他的）的桥梁，通过它能有效地实现数据与AdapterView的分离设置，使AdapterView与数据的绑定更加简便，修改更加方便
+
+    * 常用的适配器
+    
+
+| Adapter             | 含义                                |
+| ------------------- | ----------------------------------- |
+| ArrayAdapter<T>     | 用来绑定一个数组，支持泛型操作      |
+| SimpleAdapter       | 用来绑定在xml中定义的控件对应的数据 |
+| SimpleCursorAdapter | 用来绑定游标获取的数据              |
+| BaseAdapter         | 通用的基础适配器                    |
+
+* #### ListView使用BaseAdapter与ListView的基本优化
+
+    当系统开始绘制ListView的时候，首先调用getCount()方法。得到它的返回值，即ListView的长度。然后系统调用getView()方法，根据这个长度逐一绘制ListView的每一行。也就是说，如果让getCount()返回1，那么只显示一行。而getItem()和getItemId()则在需要处理和取得Adapter中的数据时调用。
+
+    一般调用方式：
+    * 在布局文件中定义一个ListView：layoutlistview
+    * 定义一个该ListView的item的布局文件：layoutItem
+    * 定义一个ViewHolder用于存储每个Item中包含的控件
+    * 创建一个类，继承BaseAdapter，并覆写以下方法
+        * getCount():用于返回列表的总项数，决定了list有多少项
+        * getItem(int position):用于返回列表当前项的数据，在处理响应方法时调用
+        * getItemId(int position):用于返回长整型的索引，在处理响应方法时调用
+        * getView(int position,View convertView,ViewGroup parent):返回当前项对应视图
+    * 写getView()就可以了
+    
+    ==代码示例==：
+    
+    
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                //用于显示的视图
+                View v = null;
+                //视图存储
+                MHodler mHodler = null;
+
+                //是否有缓存的视图
+                if (convertView != null) {
+                    v = convertView;
+                    mHodler = (MHodler) v.getTag();
+                } else {
+                    //使用item的布局初始化视图
+                    v = View.inflate(getActivity(), R.layout.layout_list_exams, null);
+                    mHodler = new MHodler();
+                    //初始化视图中每个控件
+                    mHodler.iv = (ImageView) v.findViewById(R.id.iv_exam);
+                    mHodler.tv_name = (TextView) v.findViewById(R.id.tv_exam_name);
+                    mHodler.tv_time = (TextView) v.findViewById(R.id.tv_exam_time);
+                    mHodler.tv_status = (TextView) v.findViewById(R.id.tv_exam_status);
+                    //存储视图
+                    v.setTag(mHodler);
+                }
+                //为当前视图中控件填充数据
+                Exam exam = exams.get(position);
+                mHodler.iv.setImageResource(R.mipmap.exam);
+                mHodler.tv_name.setText(exam.name);
+                mHodler.tv_time.setText(exam.begainTime + "开始\n" + exam.endTime + "结束");
+                //mHodler.tv_status.setText(exam.status == 1 ? "未参加" : "已完成");
+                if (exam.status == 1) {
+                    mHodler.tv_status.setText( "未参加");
+                    mHodler.tv_status.setTextColor(Color.RED);
+                } else {
+                    mHodler.tv_status.setText( "已完成");
+                    mHodler.tv_status.setTextColor(Color.GREEN);
+                }
+                return v;
+            }
+
+* #### 注意：
+    如果一个屏幕正好可以有size个item，ListView就一直持有size+1个item，因为屏幕最多显示size+1个item，滑动时，清空item，填充新的数据，item是从缓存中获取
+* #### 常用的监听事件
+项目被点击：
+    
+    lv_exams.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+          @Override
+          public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            //处理代码
+            }
+     });
+
 
 ### Acitvity的标准Intent
 
@@ -221,7 +352,7 @@ grammar_cjkRuby: true
 # Andorid 的一些开源库
 
 ### 镇楼图
-![enter description here][2]
+![enter description here][4]
 
 ### Volley
 
@@ -251,4 +382,6 @@ grammar_cjkRuby: true
 
 
   [1]: ./images/1464799544450.jpg "1464799544450.jpg"
-  [2]: ./images/1464830541784.jpg "1464830541784.jpg"
+  [2]: http://www.cnblogs.com/bravestarrhu/archive/2012/05/02/2479461.html
+  [3]: http://www.cnblogs.com/noTice520/archive/2011/12/05/2276379.html
+  [4]: ./images/1464830541784.jpg "1464830541784.jpg"
