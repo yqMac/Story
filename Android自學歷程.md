@@ -233,7 +233,7 @@ grammar_cjkRuby: true
         * getCount():用于返回列表的总项数，决定了list有多少项
         * getItem(int position):用于返回列表当前项的数据，在处理响应方法时调用
         * getItemId(int position):用于返回长整型的索引，在处理响应方法时调用
-        * getView(int position,View convertView,ViewGroup parent):返回当前项对应视图
+        * getView(int position,View convertView,ViewGroup parent):返回当前项对应视图，其中convertView为缓存的视图
     * 写getView()就可以了
     
     ==代码示例==：
