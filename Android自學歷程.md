@@ -543,7 +543,13 @@ grammar_cjkRuby: true
 [参考博客][7]
 
 * #### Fragment基本知识  
-
+    为了让界面可以在平板上更好地展示，Android在3.0版本引入了Fragment(碎片)功能，它非常类似于Activity，可以像Activity一样包含布局。
+    
+    * 该Fragment的布局文件
+    * 一个继承Fragment类的类，覆写onCreateView方法
+    * 在onCreateView中加载布局文件inflater.inflate(R.x.x,container,false);
+    * 在别的Activity中应用该Fragment即可
+    
 * #### 动态添加Fragment  
 
 * #### Fragment的生命周期  
