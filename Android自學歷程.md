@@ -11,9 +11,10 @@ grammar_cjkRuby: true
 # Android 初级知识
 
 ### Activity的生命周期
+[推荐博客][1]
 
  * 首先是经典的Activity生命周期图
- ![Activity life][1]
+ ![Activity life][2]
 
  * Activity其实是一个继承了ApplicationContext类的类，其中有与生命周期有关的七个方法:
   `protected void onCreate(Bundle savedInstanceState);`
@@ -49,7 +50,7 @@ grammar_cjkRuby: true
     基础的，四大组件为: ==Activity , Service服务 Content Provider 内容提供者，BroadcastReceiver广播接收器== `
 
 * #### Activity 
-    [详细解释][2]
+    [详细解释][3]
     * Activity 
         Activity ：在应用程序中，一个Activity就是一个单独的屏幕，他可以显示一些控件，也可以监听并处理用户的事件做出响应。
     
@@ -198,7 +199,7 @@ grammar_cjkRuby: true
     
 ### ListView的基本使用与优化
 
-[参考博客][3]
+[参考博客][4]
 
 * #### 基本使用
     * 职责
@@ -302,7 +303,7 @@ grammar_cjkRuby: true
 
 ==TODO==
 
-### Android系统中各种标准Intent
+### 系统中各种标准Intent
 
 * #### 用于Activity
 
@@ -533,14 +534,20 @@ grammar_cjkRuby: true
     Intent类中定义了一些以FLAG_开头的标志位，这些标志位中有的非常重要，会影响app中Activity和BroadcastReceiver等的行为。
     以下为这些标志位的索引，是从官方文档上的截图。之后会对重要的标志加以详细分析
 
-![Intent中的标志的官方文档截图][4]
+![Intent中的标志的官方文档截图][5]
 
 
 ### Android屏幕适配基础
-
+[推荐博客][6]
 ### Fragment完全解析
+[参考博客][7]
 
-### Sqlite应用详解
+* #### Fragment基本知识
+* #### 动态添加Fragment
+* 
+
+### Sqlite应用详解  
+[推荐博客][8]
 
 # Andorid 中级知识
 
@@ -595,7 +602,7 @@ grammar_cjkRuby: true
 # Andorid 的一些开源库
 
 ### 镇楼图
-![enter description here][5]
+![enter description here][9]
 
 ### Volley
 
@@ -624,8 +631,12 @@ grammar_cjkRuby: true
 ### 地图
 
 
-  [1]: ./images/1464799544450.jpg "1464799544450.jpg"
-  [2]: http://www.cnblogs.com/bravestarrhu/archive/2012/05/02/2479461.html
-  [3]: http://www.cnblogs.com/noTice520/archive/2011/12/05/2276379.html
-  [4]: ./images/1465809373152.jpg "1465809373152.jpg"
-  [5]: ./images/1464830541784.jpg "1464830541784.jpg"
+  [1]: http://blog.csdn.net/liuhe688/article/details/6733407
+  [2]: ./images/1464799544450.jpg "1464799544450.jpg"
+  [3]: http://www.cnblogs.com/bravestarrhu/archive/2012/05/02/2479461.html
+  [4]: http://www.cnblogs.com/noTice520/archive/2011/12/05/2276379.html
+  [5]: ./images/1465809373152.jpg "1465809373152.jpg"
+  [6]: http://stormzhang.com/android/2014/05/16/android-screen-adaptation/
+  [7]: http://blog.csdn.net/guolin_blog/article/details/8881711
+  [8]: http://blog.csdn.net/liuhe688/article/details/6715983
+  [9]: ./images/1464830541784.jpg "1464830541784.jpg"
