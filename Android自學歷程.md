@@ -221,7 +221,7 @@ grammar_cjkRuby: true
 | SimpleCursorAdapter | 用来绑定游标获取的数据              |
 | BaseAdapter         | 通用的基础适配器                    |
 
-* #### ListView使用BaseAdapter与ListView的基本优化
+* #### BaseAdapter与基本优化
 
     当系统开始绘制ListView的时候，首先调用getCount()方法。得到它的返回值，即ListView的长度。然后系统调用getView()方法，根据这个长度逐一绘制ListView的每一行。也就是说，如果让getCount()返回1，那么只显示一行。而getItem()和getItemId()则在需要处理和取得Adapter中的数据时调用。
 
@@ -302,7 +302,9 @@ grammar_cjkRuby: true
 
 ==TODO==
 
-### Acitvity的标准Intent
+### Android系统中用于Acitvity的标准Intent
+
+* #### 
 
 ### Android屏幕适配基础
 
