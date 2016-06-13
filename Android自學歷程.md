@@ -302,9 +302,133 @@ grammar_cjkRuby: true
 
 ==TODO==
 
-### Android系统中用于Acitvity的标准Intent
+### Android系统中各种标准Intent
 
-* #### 
+* #### 用于Activity
+
+ 1. 根据联系人ID显示联系人信息
+ 
+
+    Intent intent = new Intent();  
+    intent.setAction(Intent.ACTION_VIEW);   //显示联系人信息  
+    intent.setData(Uri.parse("content://contacts/people/492"));  
+    startActivity(intent);  
+ 2. 根据联系人ID显示拨号面板
+
+
+    Intent intent = new Intent();  
+    intent.setAction(Intent.ACTION_DIAL);  //显示拨号面板  
+    intent.setData(Uri.parse("content://contacts/people/492"));  
+    startActivity(intent);  
+ 3. 显示拨号面板， 并在拨号面板上将号码显示出来
+ 
+
+    Intent intent = new Intent();  
+    intent.setAction(Intent.ACTION_VIEW);     
+    intent.setData(Uri.parse("tel://15216448315"));  
+    startActivity(intent);  
+
+ 4. 显示拨号面板， 并在拨号面板上将号码显示出来
+
+
+    Intent intent = new Intent();  
+    intent.setAction(Intent.ACTION_DIAL);   //显示拨号面板, 并在拨号面板上将号码显示出来  
+    intent.setData(Uri.parse("tel://15216448315"));  
+    startActivity(intent); 
+
+ 5. 根据联系人的ID编辑联系人
+
+
+    Intent intent = new Intent();  
+    intent.setAction(Intent.ACTION_EDIT);   //编辑联系人  
+    intent.setData(Uri.parse("content://contacts/people/492"));  
+    startActivity(intent);  
+    
+ 6. 显示通讯录联系人和其他账号联系人的列表
+
+
+    Intent intent = new Intent();  
+    intent.setAction(Intent.ACTION_VIEW);     
+    intent.setData(Uri.parse("content://contacts/people/"));  
+    startActivity(intent); 
+
+ 7. 启动HomeScreen
+
+
+    Intent intent = new Intent();  
+    intent.setAction(Intent.ACTION_MAIN);     //启动HomeScreen  
+    intent.addCategory(Intent.CATEGORY_HOME);  
+    startActivity(intent);  
+
+ 8. 选择某个联系人的号码，返回一个代表这个号码的uri，如:content://contacts/phones/982
+
+
+    Intent intent = new Intent();  
+    intent.setAction(Intent.ACTION_GET_CONTENT);       
+    intent.setType("vnd.android.cursor.item/phone");  
+    startActivityForResult(intent, 1);  
+
+ 9. 打开多个应用选取各种类型的数据,以uri返回。返回的uri可使用ContentResolver.openInputStream(Uri)打开
+
+    该功能可用在邮件中附件的选取
+    举例如下:
+    选取一张图片, 返回的uri为 content://media/external/images/media/47
+    选取一首歌, 返回的uri为 content://media/external/audio/media/51
+
+
+    Intent intent = new Intent();  
+    intent.setAction(Intent.ACTION_GET_CONTENT);       
+    intent.setType("*/*");  
+    intent.addCategory(Intent.CATEGORY_OPENABLE);  
+    startActivityForResult(intent, 2);  
+
+ 10. 自定义一个chooser，不使用系统的chooser
+     该chooser可以有自己的标题(Title)
+     并且不必让用户指定偏好
+
+
+    Intent intent = new Intent();  
+    intent.setAction(Intent.ACTION_CHOOSER);   
+    intent.putExtra(Intent.EXTRA_TITLE, "my chooser");  
+    intent.putExtra(Intent.EXTRA_INTENT,   
+            new Intent(Intent.ACTION_GET_CONTENT)  
+            .setType("*/*")  
+            .addCategory(Intent.CATEGORY_OPENABLE)  
+            );  
+      
+    startActivityForResult(intent, 2);  
+
+ 11. 选取activity，返回的activity可在返回的intent.getComponent()中得到
+
+
+    Intent intent = new Intent();  
+    intent.setAction(Intent.ACTION_PICK_ACTIVITY);   
+    intent.putExtra( Intent.EXTRA_INTENT,   
+            new Intent(Intent.ACTION_GET_CONTENT)  
+            .setType("*/*")  
+            .addCategory(Intent.CATEGORY_OPENABLE)  
+            );  
+    startActivityForResult(intent, 3);  
+
+ 12. 启动搜索，在以下示例代码中，"ANDROID"为要搜索的字符串
+     当执行这段代码后, 会在系统的Chooser中显示可以用于搜索的程序列表
+
+
+    Intent intent = new Intent();  
+    intent.setAction(Intent.ACTION_SEARCH);     //启动搜索  
+    intent.putExtra(SearchManager.QUERY, "ANDROID");  
+    startActivity(intent);  
+
+ 13. 启动WEB搜索，在以下示例代码中，"ANDROID"为要搜索的字符串
+     当执行这段代码后, 会在系统的Chooser中显示可以用于搜索的程序列表，一般情况下系统中安装的浏览器都会显示出来
+
+
+    Intent intent = new Intent();  
+    intent.setAction(Intent.ACTION_WEB_SEARCH);     //启动搜索  
+    intent.putExtra(SearchManager.QUERY, "ANDROID");  
+    startActivity(intent);  
+    
+* #### 用于BroadcastProvider的Intent
 
 ### Android屏幕适配基础
 
@@ -398,3 +522,4 @@ grammar_cjkRuby: true
   [2]: http://www.cnblogs.com/bravestarrhu/archive/2012/05/02/2479461.html
   [3]: http://www.cnblogs.com/noTice520/archive/2011/12/05/2276379.html
   [4]: ./images/1464830541784.jpg "1464830541784.jpg"
+
